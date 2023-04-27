@@ -10,6 +10,7 @@ export class PostService {
   constructor(private readonly http: HttpClient) {}
 
   getAll() {
+    debugger
     return this.http.get('https://jsonplaceholder.typicode.com/posts');
   }
 

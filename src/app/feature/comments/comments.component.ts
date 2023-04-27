@@ -25,7 +25,6 @@ export class CommentsComponent implements OnInit, OnDestroy {
   post$: Observable<IPost | null> = this.store.pipe(select(selectPost));
   comments$: Observable<Array<IComment>> = this.store.pipe(select(selectComments));
   commentsCount$: Observable<number> = this.store.pipe(select(selectCommentsCount));
-  isCommentsLoading$ = this.store.pipe(select(selectLoadCommentsInProgress));
 
   constructor(
     private route: ActivatedRoute,

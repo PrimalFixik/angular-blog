@@ -4,7 +4,7 @@
     <mat-card-subtitle class="example-card__username" [routerLink]="'/users/' + post.userId">{{userName}}</mat-card-subtitle>
     <mat-card-title class="example-card__title cut" [routerLink]="'/post/' + post.id">{{post.title}}</mat-card-title>
   </mat-card-header>
-  <img class="example-card__img" mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+  <img [routerLink]="'/post/' + post.id" class="example-card__img" mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
   <mat-card-content>
     <p class="example-card__body cut">{{post.body}}</p>
   </mat-card-content>

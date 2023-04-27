@@ -19,9 +19,6 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
   routeSubscription: Subscription;
   user$: Observable<IUser | null> = this.store.pipe(select(selectUser));
 
-  isPostsLoading$ = this.store.pipe(select(selectLoadPostsInProgress));
-  isUserLoading$ = this.store.pipe(select(selectLoadUserInProgress));
-
   constructor(
     private route: ActivatedRoute,
     private readonly store: Store<IAppState>

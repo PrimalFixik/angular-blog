@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {select, Store} from "@ngrx/store";
 import {Observable, Subscription} from "rxjs";
@@ -20,8 +20,6 @@ import {
 import {selectLoadUsersInProgress, selectUsers} from "../../core/store/selectors/users.selector";
 import {IUser} from "../../core/interfaces/IUser";
 import {LoadUsers} from "../../core/store/actions/users.actions";
-import {selectLoadPostInProgress} from "../../core/store/selectors/post.selector";
-import {selectLoadUserInProgress} from "../../core/store/selectors/user.selector";
 
 
 @Component({
@@ -33,12 +31,10 @@ import {selectLoadUserInProgress} from "../../core/store/selectors/user.selector
 export class PostsComponent implements OnInit, OnDestroy {
   routeSubscription: Subscription;
 
-  posts$: Observable<Array<IPost>> = this.store.pipe(select(selectPosts));
-  users$: Observable<Array<IUser>> = this.store.pipe(select(selectUsers));
-  totalPosts$: Observable<number> = this.store.pipe(select(selectPostsTotal));
-  postsPageLimit$: Observable<number> = this.store.pipe(select(selectPostsLimit));
-  isPostsLoading$: Observable<boolean> = this.store.pipe(select(selectLoadPostsInProgress));
-  isUsersLoading$ = this.store.pipe(select(selectLoadUsersInProgress));
+  posts$: Observable<Array<IPost>> = this.store.select(selectPosts);
+  users$: Observable<Array<IUser>> = this.store.select(selectUsers);
+  totalPosts$: Observable<number> = this.store.select(selectPostsTotal);
+  postsPageLimit$: Observable<number> = this.store.select(selectPostsLimit);
 
   userId: number | undefined;
   pageSize = 9;

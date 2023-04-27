@@ -1,20 +1,15 @@
-<div *ngIf="(isPostsLoading$ | async) || (isUsersLoading$ | async);then loader else content"></div>
-
-<ng-template #loader><app-loader></app-loader></ng-template>
-<ng-template #content><h1>Posts</h1>
-  <div class="posts-container">
-    <div *ngFor="let post of (posts$ | async)">
-      <app-post-item [post]="post" [userName]="getUserName(post.userId, (users$ | async))"></app-post-item>
-    </div>
+<div class="posts-container">
+  <div *ngFor="let post of (posts$ | async)">
+    <app-post-item [post]="post" [userName]="getUserName(post.userId, (users$ | async))"></app-post-item>
   </div>
+</div>
 
-  <mat-paginator
-    (page)="handlePageEvent($event)"
-    [length]="(totalPosts$ | async)"
-    [pageSize]="pageSize"
-    [showFirstLastButtons]="showFirstLastButtons"
-    [pageSizeOptions]="pageSizeOptions"
-    [pageIndex]="pageIndex"
-    aria-label="Select page">
-  </mat-paginator>
-</ng-template>
+<mat-paginator
+  (page)="handlePageEvent($event)"
+  [length]="(totalPosts$ | async)"
+  [pageSize]="pageSize"
+  [showFirstLastButtons]="showFirstLastButtons"
+  [pageSizeOptions]="pageSizeOptions"
+  [pageIndex]="pageIndex"
+  aria-label="Select page">
+</mat-paginator>

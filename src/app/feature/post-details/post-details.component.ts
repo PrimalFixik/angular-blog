@@ -22,8 +22,6 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
 
   post$: Observable<IPost | null> = this.store.pipe(select(selectPost));
   user$: Observable<IUser | null> = this.store.pipe(select(selectUser));
-  isPostLoading$ = this.store.pipe(select(selectLoadPostInProgress));
-  isUserLoading$ = this.store.pipe(select(selectLoadUserInProgress));
 
 
   constructor(
