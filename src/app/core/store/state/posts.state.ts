@@ -11,7 +11,7 @@ export interface IPostsState {
 export const initialPostsState: IPostsState = {
   posts: [],
   limit: 9,
-  total: 100,
+  total: 0,
   loadPostsInProgress: false,
   loadPostsError: null,
 };

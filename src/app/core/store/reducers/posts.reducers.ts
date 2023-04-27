@@ -72,6 +72,7 @@ export function postsReducers(
       }
     }
     case PostsActionsEnum.LoadAllPostsSuccess: {
+      debugger
       return {
         ...state,
         loadPostsInProgress: false,

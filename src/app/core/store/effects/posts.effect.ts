@@ -59,14 +59,12 @@ export class PostsEffect {
   loadAllPosts$ = createEffect(() => (
     this.actions.pipe(
       ofType<LoadAllPosts>(PostsActionsEnum.LoadAllPosts),
-      switchMap(action => {
+      switchMap(() => {
         return this.postService
           .getAll()
           .pipe(
             switchMap((response: any) =>
-              {
-                return of(new LoadAllPostsSuccess(response));
-              }
+              of(new LoadAllPostsSuccess(response))
             ),
             catchError(err => of(new LoadAllPostsFail(err)))
           );

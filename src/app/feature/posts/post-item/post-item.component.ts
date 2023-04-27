@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {AfterContentInit, AfterViewInit, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {IPost} from "../../../core/interfaces/IPost";
 import {LoadPostsList} from "../../../core/store/actions/posts.actions";
 import {Observable, Subscription} from "rxjs";
@@ -19,7 +19,7 @@ import {LoadCommentsList} from "../../../core/store/actions/comments.actions";
   templateUrl: './post-item.component.html',
   styleUrls: ['./post-item.component.scss']
 })
-export class PostItemComponent implements OnInit {
+export class PostItemComponent implements AfterContentInit{
   @Input() post: IPost;
   @Input() userName: string;
 
@@ -28,8 +28,7 @@ export class PostItemComponent implements OnInit {
 
   constructor(private readonly store: Store<IAppState>) {}
 
-  ngOnInit() {
-    this.store.dispatch(new LoadUser(Number(this.post?.userId)));
+  ngAfterContentInit() {
     this.store.dispatch(new LoadCommentsList(this.post.id))
   }
 }

@@ -66,9 +66,6 @@ export class PostsComponent implements OnInit, OnDestroy {
     this.startElementIndex = (event.pageIndex) * this.pageSize;
 
     this.loadPartial();
-
-    console.debug(this.pageSize)
-    console.debug(this.pageIndex)
   }
 
   constructor(
@@ -85,10 +82,10 @@ export class PostsComponent implements OnInit, OnDestroy {
 
     this.routeSubscription = this.route.params.subscribe(params => {
       if (Number(params['id'])) {
+        this.store.dispatch(new LoadAllPostsOfUser(Number(params['id'])));
         this.userId = Number(params['id']);
-        // this.store.dispatch(new LoadAllPostsOfUser(this.userId));
       } else {
-        // this.store.dispatch(new LoadAllPosts());
+        this.store.dispatch(new LoadAllPosts());
       }
     });
 
