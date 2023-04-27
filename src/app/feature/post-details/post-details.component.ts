@@ -1,15 +1,15 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {select, Store} from "@ngrx/store";
 import {IAppState} from "../../core/store/state/app.state";
 import {Observable, Subscription} from "rxjs";
 import {IPost} from "../../core/interfaces/IPost";
-import {selectPosts} from "../../core/store/selectors/posts.selector";
-import {selectPost} from "../../core/store/selectors/post.selector";
+import {selectLoadPostInProgress, selectPost} from "../../core/store/selectors/post.selector";
 import {LoadPost} from "../../core/store/actions/post.actions";
-import {selectUser} from "../../core/store/selectors/user.selector";
+import {selectLoadUserInProgress, selectUser} from "../../core/store/selectors/user.selector";
 import {IUser} from "../../core/interfaces/IUser";
 import {LoadUser} from "../../core/store/actions/user.actions";
+import {selectLoadCommentsInProgress} from "../../core/store/selectors/comments.selector";
 
 @Component({
   selector: 'app-post-details',
@@ -22,10 +22,14 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
 
   post$: Observable<IPost | null> = this.store.pipe(select(selectPost));
   user$: Observable<IUser | null> = this.store.pipe(select(selectUser));
+  isPostLoading$ = this.store.pipe(select(selectLoadPostInProgress));
+  isUserLoading$ = this.store.pipe(select(selectLoadUserInProgress));
+
 
   constructor(
     private route: ActivatedRoute,
-    private readonly store: Store<IAppState>
+    private readonly store: Store<IAppState>,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -38,6 +42,10 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
         this.store.dispatch(new LoadUser(Number(post?.userId)));
       }
     })
+  }
+
+  ngAfterViewInit() {
+    this.cdr.detectChanges();
   }
 
   ngOnDestroy() {

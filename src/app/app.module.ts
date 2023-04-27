@@ -26,6 +26,7 @@ import { CommentsComponent } from './feature/comments/comments.component';
 import { CommentItemComponent } from './feature/comments/comment-item/comment-item.component';
 import {MatIconModule} from "@angular/material/icon";
 import {MatPaginatorModule} from "@angular/material/paginator";
+import { LoaderComponent } from './shared/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     PostItemComponent,
     PostDetailsComponent,
     CommentsComponent,
-    CommentItemComponent
+    CommentItemComponent,
+    LoaderComponent
   ],
   imports: [
     HttpClientModule,

@@ -9,9 +9,9 @@ export const selectComments = createSelector(
   (state: ICommentState) => state.comments,
 );
 
-export const selectCommentsError = createSelector(
+export const selectLoadCommentsInProgress = createSelector(
   selectCommentsStates,
-  (state: ICommentState) => state.loadCommentsError,
+  (state: ICommentState) => state.loadCommentsInProgress,
 );
 
 export const selectCommentsCount = createSelector(

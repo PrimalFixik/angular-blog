@@ -4,7 +4,11 @@ import {IComment} from "../../core/interfaces/IComment";
 import {ActivatedRoute} from "@angular/router";
 import {select, Store} from "@ngrx/store";
 import {IAppState} from "../../core/store/state/app.state";
-import {selectComments, selectCommentsCount} from "../../core/store/selectors/comments.selector";
+import {
+  selectComments,
+  selectCommentsCount,
+  selectLoadCommentsInProgress
+} from "../../core/store/selectors/comments.selector";
 import {LoadCommentsList} from "../../core/store/actions/comments.actions";
 import {IPost} from "../../core/interfaces/IPost";
 import {selectPost} from "../../core/store/selectors/post.selector";
@@ -21,6 +25,7 @@ export class CommentsComponent implements OnInit, OnDestroy {
   post$: Observable<IPost | null> = this.store.pipe(select(selectPost));
   comments$: Observable<Array<IComment>> = this.store.pipe(select(selectComments));
   commentsCount$: Observable<number> = this.store.pipe(select(selectCommentsCount));
+  isCommentsLoading$ = this.store.pipe(select(selectLoadCommentsInProgress));
 
   constructor(
     private route: ActivatedRoute,

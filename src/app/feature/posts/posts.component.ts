@@ -5,16 +5,23 @@ import {Observable, Subscription} from "rxjs";
 import {PageEvent} from "@angular/material/paginator";
 import {IAppState} from "../../core/store/state/app.state";
 import {IPost} from "../../core/interfaces/IPost";
-import {selectPosts, selectPostsLimit, selectPostsTotal} from "../../core/store/selectors/posts.selector";
+import {
+  selectLoadPostsInProgress,
+  selectPosts,
+  selectPostsLimit,
+  selectPostsTotal
+} from "../../core/store/selectors/posts.selector";
 import {
   LoadAllPosts,
   LoadAllPostsOfUser,
   LoadPostsList,
   LoadPostsOfUserList
 } from "../../core/store/actions/posts.actions";
-import {selectUsers} from "../../core/store/selectors/users.selector";
+import {selectLoadUsersInProgress, selectUsers} from "../../core/store/selectors/users.selector";
 import {IUser} from "../../core/interfaces/IUser";
 import {LoadUsers} from "../../core/store/actions/users.actions";
+import {selectLoadPostInProgress} from "../../core/store/selectors/post.selector";
+import {selectLoadUserInProgress} from "../../core/store/selectors/user.selector";
 
 
 @Component({
@@ -26,11 +33,12 @@ import {LoadUsers} from "../../core/store/actions/users.actions";
 export class PostsComponent implements OnInit, OnDestroy {
   routeSubscription: Subscription;
 
-  testSub:any;
   posts$: Observable<Array<IPost>> = this.store.pipe(select(selectPosts));
   users$: Observable<Array<IUser>> = this.store.pipe(select(selectUsers));
   totalPosts$: Observable<number> = this.store.pipe(select(selectPostsTotal));
   postsPageLimit$: Observable<number> = this.store.pipe(select(selectPostsLimit));
+  isPostsLoading$: Observable<boolean> = this.store.pipe(select(selectLoadPostsInProgress));
+  isUsersLoading$ = this.store.pipe(select(selectLoadUsersInProgress));
 
   userId: number | undefined;
   pageSize = 9;
@@ -69,7 +77,7 @@ export class PostsComponent implements OnInit, OnDestroy {
   ) {}
 
   getUserName(userId: number, users: any) {
-    return users.find((user: any) => user?.id == userId).username;
+    return userId ? users.find((user: any) => user?.id === userId).username : '';
   }
 
   ngOnInit(): void {
@@ -84,12 +92,10 @@ export class PostsComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.testSub = this.totalPosts$.subscribe(total => console.debug(total))
     this.loadPartial();
   }
 
   ngOnDestroy(): void {
     this.routeSubscription.unsubscribe();
-    this.testSub.unsubscribe();
   }
 }

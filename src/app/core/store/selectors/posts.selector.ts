@@ -24,3 +24,8 @@ export const selectPostsTotal = createSelector(
   selectPostsStates,
   (state: IPostsState) => state.total,
 )
+
+export const selectLoadPostsInProgress = createSelector(
+  selectPostsStates,
+  (state: IPostsState) => state.loadPostsInProgress
+)

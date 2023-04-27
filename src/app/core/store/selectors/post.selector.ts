@@ -13,3 +13,8 @@ export const selectPostError = createSelector(
   selectPostStates,
   (state: IPostState) => state.loadPostError,
 );
+
+export const selectLoadPostInProgress = createSelector(
+  selectPostStates,
+  (state: IPostState) => state.loadPostInProgress,
+);

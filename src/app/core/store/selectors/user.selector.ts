@@ -9,3 +9,8 @@ export const selectUser = createSelector(
   selectUserStates,
   (state: IUserState) => state.user,
 );
+
+export const selectLoadUserInProgress = createSelector(
+  selectUserStates,
+  (state: IUserState) => state.loadUserInProgress,
+);

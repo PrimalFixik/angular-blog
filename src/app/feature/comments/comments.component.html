@@ -1,6 +1,12 @@
-<div class="comments">
-  <h1 class="comments__header">Comments ({{(commentsCount$ | async)}})</h1>
-  <div *ngFor="let comment of (comments$ | async)">
-    <app-comment-item [comment]="comment"></app-comment-item>
+<div *ngIf="(isCommentsLoading$ | async);then loader else content"></div>
+
+<ng-template #loader><app-loader></app-loader></ng-template>
+<ng-template #content>
+  <div class="comments">
+    <h1 class="comments__header">Comments ({{(commentsCount$ | async)}})</h1>
+    <div *ngFor="let comment of (comments$ | async)">
+      <app-comment-item [comment]="comment"></app-comment-item>
+    </div>
   </div>
-</div>
+
+</ng-template>
