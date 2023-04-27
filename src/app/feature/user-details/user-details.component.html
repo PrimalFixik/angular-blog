@@ -1,1 +1,30 @@
-<p>user-details works!</p>
+<h1>{{(user$ | async)?.username}}'s profile</h1>
+<div class="user">
+  <div class="user__photo"></div>
+  <div class="user__info">
+    <h1>{{(user$ | async)?.name}}</h1>
+    <div class="user__info__main">
+      <div class="user__info__main__username">{{(user$ | async)?.username}}</div>
+      <span class="user__info__main__divider">·</span>
+      <div class="user__info__main__email">{{(user$ | async)?.email}}</div>
+    </div>
+
+    <div class="user__info__address">
+      Address:
+      {{(user$ | async)?.address?.suite}},
+      {{(user$ | async)?.address?.street}},
+      {{(user$ | async)?.address?.city}}
+      {{(user$ | async)?.address?.zipcode}}</div>
+
+    <div class="user__info__phone">Phone: {{(user$ | async)?.phone}}</div>
+    <div class="user__info__website">Website: <a href="{{(user$ | async)?.website}}">{{(user$ | async)?.website}}</a> </div>
+
+    <div class="user__info__company">
+      <p class="user__info__company__name">{{(user$ | async)?.company?.name}}</p>
+      <p class="user__info__company__description">{{(user$ | async)?.company?.bs}}</p>
+      <p class="user__info__company__catchPhrase">{{(user$ | async)?.company?.catchPhrase}}</p>
+    </div>
+  </div>
+</div>
+
+<app-posts></app-posts>

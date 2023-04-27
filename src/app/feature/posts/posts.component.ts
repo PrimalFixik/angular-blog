@@ -1,10 +1,21 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
 import {select, Store} from "@ngrx/store";
+import {Observable, Subscription} from "rxjs";
+import {PageEvent} from "@angular/material/paginator";
 import {IAppState} from "../../core/store/state/app.state";
-import {Observable} from "rxjs";
 import {IPost} from "../../core/interfaces/IPost";
-import {selectPosts} from "../../core/store/selectors/posts.selector";
-import {LoadPostsList} from "../../core/store/actions/posts.actions";
+import {selectPosts, selectPostsLimit, selectPostsTotal} from "../../core/store/selectors/posts.selector";
+import {
+  LoadAllPosts,
+  LoadAllPostsOfUser,
+  LoadPostsList,
+  LoadPostsOfUserList
+} from "../../core/store/actions/posts.actions";
+import {selectUsers} from "../../core/store/selectors/users.selector";
+import {IUser} from "../../core/interfaces/IUser";
+import {LoadUsers} from "../../core/store/actions/users.actions";
+
 
 @Component({
   selector: 'app-posts',
@@ -12,20 +23,73 @@ import {LoadPostsList} from "../../core/store/actions/posts.actions";
   styleUrls: ['./posts.component.scss']
 })
 
-export class PostsComponent implements OnInit, OnDestroy{
-  postsSubscription: any;
-  posts$: Observable<Array<IPost>> = this.store.pipe(select(selectPosts));
+export class PostsComponent implements OnInit, OnDestroy {
+  routeSubscription: Subscription;
 
-  constructor(private readonly store: Store<IAppState>, private readonly cdr: ChangeDetectorRef) {}
+  testSub:any;
+  posts$: Observable<Array<IPost>> = this.store.pipe(select(selectPosts));
+  users$: Observable<Array<IUser>> = this.store.pipe(select(selectUsers));
+  totalPosts$: Observable<number> = this.store.pipe(select(selectPostsTotal));
+  postsPageLimit$: Observable<number> = this.store.pipe(select(selectPostsLimit));
+
+  userId: number | undefined;
+  pageSize = 9;
+  pageIndex = 0;
+  startElementIndex = 0;
+  pageSizeOptions = [6, 9, 12];
+  showFirstLastButtons = true;
+
+  loadPartial() {
+    if (this.userId) {
+      this.store.dispatch(new LoadPostsOfUserList({
+        userId: this.userId,
+        start: this.startElementIndex,
+        limit: this.pageSize}));
+    } else {
+      this.store.dispatch(new LoadPostsList({
+        start: this.startElementIndex,
+        limit: this.pageSize}));
+    }
+  }
+
+  handlePageEvent(event: PageEvent) {
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+    this.startElementIndex = (event.pageIndex) * this.pageSize;
+
+    this.loadPartial();
+
+    console.debug(this.pageSize)
+    console.debug(this.pageIndex)
+  }
+
+  constructor(
+    private route: ActivatedRoute,
+    private readonly store: Store<IAppState>
+  ) {}
+
+  getUserName(userId: number, users: any) {
+    return users.find((user: any) => user?.id == userId).username;
+  }
 
   ngOnInit(): void {
-    this.postsSubscription = this.posts$.subscribe(posts => {
-      console.log(posts);
+    this.store.dispatch(new LoadUsers());
+
+    this.routeSubscription = this.route.params.subscribe(params => {
+      if (Number(params['id'])) {
+        this.userId = Number(params['id']);
+        // this.store.dispatch(new LoadAllPostsOfUser(this.userId));
+      } else {
+        // this.store.dispatch(new LoadAllPosts());
+      }
     });
-    this.store.dispatch(new LoadPostsList());
+
+    this.testSub = this.totalPosts$.subscribe(total => console.debug(total))
+    this.loadPartial();
   }
 
   ngOnDestroy(): void {
-    this.postsSubscription.unsubscribe();
+    this.routeSubscription.unsubscribe();
+    this.testSub.unsubscribe();
   }
 }

@@ -10,9 +10,16 @@
     text-overflow: ellipsis;
   }
 
+  &__header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+    cursor: pointer;
+  }
+
   &__title {
     height: 50px;
     -webkit-line-clamp: 2;
+    cursor: pointer;
   }
 
   &__body {
@@ -23,9 +30,13 @@
   &__img {
     margin: 5px 0 15px;
   }
-}
+  &__footer {
+    padding: 0 15px;
+    color: hsl(0, 0, 50%);
 
-.example-header-image {
-  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-  background-size: cover;
+    &__count {
+      font-weight: bold;
+      padding-left: 5px;
+    }
+  }
 }

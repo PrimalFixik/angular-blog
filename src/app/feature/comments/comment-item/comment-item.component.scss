@@ -1,0 +1,18 @@
+.comment {
+  &__name {
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+  &__email {
+    color: hsl(0, 0, 50%);
+  }
+
+  &__body {
+    font-size: 18px;
+  }
+
+  &__divider {
+    margin: 20px 0;
+  }
+}

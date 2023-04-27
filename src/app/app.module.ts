@@ -19,6 +19,13 @@ import {appReducers} from "./core/store/reducers/app.reducers";
 import {PostsEffect} from "./core/store/effects/posts.effect";
 import {HttpClientModule} from "@angular/common/http";
 import {MatButtonModule} from "@angular/material/button";
+import {UserEffect} from "./core/store/effects/user.effect";
+import {CommentsEffect} from "./core/store/effects/comments.effect";
+import { PostDetailsComponent } from './feature/post-details/post-details.component';
+import { CommentsComponent } from './feature/comments/comments.component';
+import { CommentItemComponent } from './feature/comments/comment-item/comment-item.component';
+import {MatIconModule} from "@angular/material/icon";
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 @NgModule({
   declarations: [
@@ -28,7 +35,10 @@ import {MatButtonModule} from "@angular/material/button";
     PostsComponent,
     UserDetailsComponent,
     PageNotFoundComponent,
-    PostItemComponent
+    PostItemComponent,
+    PostDetailsComponent,
+    CommentsComponent,
+    CommentItemComponent
   ],
   imports: [
     HttpClientModule,
@@ -39,8 +49,10 @@ import {MatButtonModule} from "@angular/material/button";
     MatDividerModule,
     MatCardModule,
     MatButtonModule,
+    MatPaginatorModule,
     StoreModule.forRoot(appReducers),
-    EffectsModule.forRoot([PostsEffect])
+    EffectsModule.forRoot([PostsEffect, UserEffect, CommentsEffect]),
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

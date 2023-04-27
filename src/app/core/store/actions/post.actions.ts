@@ -9,6 +9,7 @@ export enum PostActionsEnum {
 
 export class LoadPost implements Action {
   public readonly type = PostActionsEnum.LoadPost;
+  constructor(public payload: number) {}
 }
 
 export class LoadPostSuccess implements Action {

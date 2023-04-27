@@ -19,3 +19,8 @@ export const selectPostsErrors = createSelector(
   selectPostsStates,
   (state: IPostsState) => state.loadPostsError,
 );
+
+export const selectPostsTotal = createSelector(
+  selectPostsStates,
+  (state: IPostsState) => state.total,
+)

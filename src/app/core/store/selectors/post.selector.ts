@@ -8,3 +8,8 @@ export const selectPost = createSelector(
   selectPostStates,
   (state: IPostState) => state.post,
 );
+
+export const selectPostError = createSelector(
+  selectPostStates,
+  (state: IPostState) => state.loadPostError,
+);

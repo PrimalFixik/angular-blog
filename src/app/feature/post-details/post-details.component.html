@@ -1,0 +1,22 @@
+<div class="post">
+  <div class="post__author" [routerLink]="'/users/' + (user$ | async)?.id">
+    <div class="post__author__img"></div>
+    <div class="post__author__name-container">
+      <span class="post__author__name-container__name">{{(user$ | async)?.name}}</span>
+      <span class="post__author__name-container__company">{{(user$ | async)?.company?.name}}</span>
+    </div>
+  </div>
+
+  <h1 class="post__header">{{(post$ | async)?.title}}</h1>
+
+  <p class="post__body">{{(post$ | async)?.body}} {{(post$ | async)?.body}}</p>
+  <p class="post__body">{{(post$ | async)?.body}} {{(post$ | async)?.body}} {{(post$ | async)?.body}}</p>
+  <p class="post__body">{{(post$ | async)?.body}} {{(post$ | async)?.body}} {{(post$ | async)?.body}} {{(post$ | async)?.body}}</p>
+  <p class="post__body">{{(post$ | async)?.body}}</p>
+</div>
+
+<mat-divider></mat-divider>
+
+<app-comments></app-comments>
+
+
