@@ -1,0 +1,15 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <div mat-card-avatar class="example-card__header-image" [routerLink]="'/users/' + post.userId"></div>
+    <mat-card-subtitle class="example-card__username" [routerLink]="'/users/' + post.userId">{{userName}}</mat-card-subtitle>
+    <mat-card-title class="example-card__title cut" [routerLink]="'/post/' + post.id">{{post.title}}</mat-card-title>
+  </mat-card-header>
+  <img [routerLink]="'/post/' + post.id" class="example-card__img" mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+  <mat-card-content>
+    <p class="example-card__body cut">{{post.body}}</p>
+  </mat-card-content>
+  <mat-card-actions class="example-card__footer">
+    <mat-icon fontIcon="comment"></mat-icon>
+    <span class="example-card__footer__count">{{commentsCount$ | async}}</span>
+  </mat-card-actions>
+</mat-card>
